@@ -1,0 +1,6 @@
+@Minutes90v8_HostAddress = http://localhost:5188
+
+GET {{Minutes90v8_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
