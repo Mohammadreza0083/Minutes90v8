@@ -4,8 +4,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "dotnet out/Minutes90v8.dll",
-    "healthcheckPath": "/WeatherForecast/health",
-    "healthcheckTimeout": 300
+    "startCommand": "dotnet out/Minutes90v8.dll"
   }
 } 

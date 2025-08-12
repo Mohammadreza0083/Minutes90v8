@@ -11,10 +11,13 @@ namespace Minutes90v8
         {
             try
             {
+                Console.WriteLine("Starting application...");
+                
                 var builder = WebApplication.CreateBuilder(args);
 
                 // Configure for Railway
                 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+                Console.WriteLine($"Using port: {port}");
                 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
                 // Add basic services only
@@ -23,6 +26,8 @@ namespace Minutes90v8
                 builder.Services.AddSwaggerGen();
 
                 var app = builder.Build();
+
+                Console.WriteLine("Application built successfully");
 
                 // Configure the HTTP request pipeline.
                 if (app.Environment.IsDevelopment())
@@ -38,12 +43,13 @@ namespace Minutes90v8
                 app.UseAuthorization();
                 app.MapControllers();
 
-                Console.WriteLine("Starting application...");
+                Console.WriteLine("Starting web server...");
                 app.Run();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Application startup failed: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 throw;
             }
         }
