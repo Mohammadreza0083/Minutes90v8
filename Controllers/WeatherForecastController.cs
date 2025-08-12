@@ -29,5 +29,15 @@ namespace Minutes90v8.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("health")]
+        public IActionResult Health()
+        {
+            return Ok(new { 
+                status = "healthy", 
+                timestamp = DateTime.UtcNow,
+                message = "API is running successfully"
+            });
+        }
     }
 }
