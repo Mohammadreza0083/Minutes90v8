@@ -74,6 +74,7 @@ namespace minutes90v8.Extensions
                     }
                 };
             });
+            
             services.AddAuthorizationBuilder()
                 .AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
 

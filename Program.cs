@@ -65,17 +65,19 @@ namespace Minutes90v8
                 // Try database operations
                 try
                 {
-                    using IServiceScope scope = app.Services.CreateScope();
-                    var services = scope.ServiceProvider;
-                    
-                    AppDbContext context = services.GetRequiredService<AppDbContext>();
-                    await context.Database.MigrateAsync();
-                    Console.WriteLine("Database migration completed");
-                    
-                    var userManager = services.GetRequiredService<UserManager<AppUsers>>();
-                    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
-                    await IdentityDataSeederExtension.SeedUsersAndRolesAsync(userManager, roleManager);
-                    Console.WriteLine("Database seeding completed");
+                    using (var scope = app.Services.CreateScope())
+                    {
+                        var services = scope.ServiceProvider;
+                        
+                        var context = services.GetRequiredService<AppDbContext>();
+                        await context.Database.MigrateAsync();
+                        Console.WriteLine("Database migration completed");
+                        
+                        var userManager = services.GetRequiredService<UserManager<AppUsers>>();
+                        var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+                        await IdentityDataSeederExtension.SeedUsersAndRolesAsync(userManager, roleManager);
+                        Console.WriteLine("Database seeding completed");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -89,7 +91,6 @@ namespace Minutes90v8
             catch (Exception ex)
             {
                 Console.WriteLine($"Application startup failed: {ex.Message}");
-                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 throw;
             }
         }

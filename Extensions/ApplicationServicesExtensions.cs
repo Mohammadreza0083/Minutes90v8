@@ -33,10 +33,10 @@ namespace minutes90v8.Extensions
                 }
                 else
                 {
+                    Console.WriteLine("Using PostgreSQL database");
                     services.AddDbContext<AppDbContext>(opt =>
                     {
-                        opt.UseNpgsql(connectionString)
-                            .EnableSensitiveDataLogging();
+                        opt.UseNpgsql(connectionString);
                     });
                 }
             }
