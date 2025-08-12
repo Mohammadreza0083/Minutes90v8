@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Minutes90v8.Controllers
 {
@@ -36,7 +39,8 @@ namespace Minutes90v8.Controllers
             return Ok(new { 
                 status = "healthy", 
                 timestamp = DateTime.UtcNow,
-                message = "API is running successfully"
+                message = "API is running successfully",
+                version = "1.0.0"
             });
         }
     }

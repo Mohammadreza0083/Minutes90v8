@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Threading.Tasks;
 
 namespace Minutes90v8
 {
@@ -49,7 +51,6 @@ namespace Minutes90v8
             catch (Exception ex)
             {
                 Console.WriteLine($"Application startup failed: {ex.Message}");
-                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 throw;
             }
         }
