@@ -2,7 +2,7 @@
 nixPkgs = ["dotnet-sdk_8"]
 
 [phases.build]
-cmd = "dotnet publish -c Release -o out"
+cmd = "dotnet restore && dotnet publish -c Release -o out"
 
 [phases.start]
 cmd = "dotnet out/Minutes90v8.dll"
