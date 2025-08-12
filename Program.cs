@@ -14,10 +14,13 @@ namespace Minutes90v8
         {
             try
             {
+                Console.WriteLine("Starting application...");
+                
                 var builder = WebApplication.CreateBuilder(args);
 
                 // Configure for Railway
                 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+                Console.WriteLine($"Using port: {port}");
                 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
                 // Add services to the container.
@@ -28,6 +31,8 @@ namespace Minutes90v8
                 builder.Services.AddControllers();
 
                 var app = builder.Build();
+
+                Console.WriteLine("Application built successfully");
 
                 // Configure the HTTP request pipeline.
                 if (app.Environment.IsDevelopment())
@@ -43,22 +48,29 @@ namespace Minutes90v8
                 app.UseAuthorization();
                 app.MapControllers();
 
+                Console.WriteLine("Starting database migration...");
+
                 using IServiceScope scope = app.Services.CreateScope();
                 var services = scope.ServiceProvider;
                 try
                 {
                     AppDbContext context = services.GetRequiredService<AppDbContext>();
                     await context.Database.MigrateAsync();
+                    Console.WriteLine("Database migration completed");
+                    
                     var userManager = services.GetRequiredService<UserManager<AppUsers>>();
                     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
                     await IdentityDataSeederExtension.SeedUsersAndRolesAsync(userManager, roleManager);
+                    Console.WriteLine("Database seeding completed");
                 }
                 catch (Exception ex)
                 {
                     ILogger logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred while migrating the database or seeding data.");
+                    Console.WriteLine($"Database error: {ex.Message}");
                 }
 
+                Console.WriteLine("Starting application...");
                 app.Run();
             }
             catch (Exception ex)
