@@ -5,10 +5,15 @@ using minutes90v8.Interfaces;
 
 namespace minutes90v8.Controllers
 {
-    public class AccountController(
-    IAccountServices accountService,
-    ILogger<AccountController> logger) : BaseApiController
+    public class AccountController: BaseApiController
     {
+        private readonly IAccountServices accountService;
+        private readonly ILogger<AccountController> logger;
+        public AccountController(IAccountServices accountService, ILogger<AccountController> logger)
+        {
+            this.accountService = accountService;
+            this.logger = logger;
+        }
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)

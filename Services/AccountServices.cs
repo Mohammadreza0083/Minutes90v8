@@ -6,13 +6,26 @@ using minutes90v8.Interfaces;
 
 namespace minutes90v8.Services
 {
-    public class AccountServices(
-    UserManager<AppUsers> userManager,
-    SignInManager<AppUsers> signInManager,
-    ITokenServices tokenServices,
-    IMapper mapper,
-    IUnitOfWorkRepo repo): IAccountServices
+    public class AccountServices: IAccountServices
     {
+        private readonly UserManager<AppUsers> userManager;
+        private readonly SignInManager<AppUsers> signInManager;
+        private readonly ITokenServices tokenServices;
+        private readonly IMapper mapper;
+        private readonly IUnitOfWorkRepo repo;
+        public AccountServices(
+            UserManager<AppUsers> userManager,
+            SignInManager<AppUsers> signInManager,
+            ITokenServices tokenServices,
+            IMapper mapper,
+            IUnitOfWorkRepo repo)
+        {
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.tokenServices = tokenServices;
+            this.mapper = mapper;
+            this.repo = repo;
+        }
         public async Task<(SignInResult, UserDto?)> LoginAsync(LoginDto loginDto)
         {
             var user = await userManager.FindByNameAsync(loginDto.UsernameOrEmail)

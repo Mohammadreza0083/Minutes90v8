@@ -8,9 +8,15 @@ using System.Text;
 
 namespace minutes90v8.Services
 {
-    public class TokenServices(IConfiguration configuration, UserManager<AppUsers> manager)
-        : ITokenServices
+    public class TokenServices: ITokenServices
     {
+        private readonly UserManager<AppUsers> manager;
+        private readonly IConfiguration configuration;
+        public TokenServices(IConfiguration configuration, UserManager<AppUsers> manager)
+        {
+            this.manager = manager;
+            this.configuration = configuration;
+        }
         public async Task<string?> CreateToken(AppUsers user)
         {
             // Get and validate token key from configuration
