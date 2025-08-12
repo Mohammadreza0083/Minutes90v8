@@ -1,7 +1,7 @@
 ﻿using minutes90v8.Data;
-using minutes90.Interfaces;
+using minutes90v8.Interfaces;
 
-namespace minutes90.Repository
+namespace minutes90v8.Repository
 {
     public class UnitOfWorkRepo(AppDbContext context) : IUnitOfWorkRepo
     {

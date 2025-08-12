@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using minutes90.Entities;
+using minutes90v8.Entities;
 
-namespace minutes90.Data.Config
+namespace minutes90v8.Data.Config
 {
     public class AppUserConfig : IEntityTypeConfiguration<AppUsers>
     {

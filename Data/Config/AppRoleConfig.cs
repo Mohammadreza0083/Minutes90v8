@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using minutes90.Entities.Roles;
+using minutes90v8.Entities.Roles;
 
-namespace minutes90.Data.Config
+namespace minutes90v8.Data.Config
 {
     public class AppRoleConfig : IEntityTypeConfiguration<AppRole>
     {

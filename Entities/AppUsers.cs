@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using minutes90.Entities.Roles;
+using minutes90v8.Entities.Roles;
 using System.ComponentModel.DataAnnotations;
 
-namespace minutes90.Entities
+namespace minutes90v8.Entities
 {
     public class AppUsers : IdentityUser<int>
     {

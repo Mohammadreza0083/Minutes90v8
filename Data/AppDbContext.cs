@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using minutes90.Entities;
-using minutes90.Entities.Roles;
+using minutes90v8.Entities;
+using minutes90v8.Entities.Roles;
 using System.Reflection;
 
 namespace minutes90v8.Data

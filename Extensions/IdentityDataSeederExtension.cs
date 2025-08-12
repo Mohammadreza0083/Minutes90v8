@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using minutes90.Entities;
-using minutes90.Entities.Roles;
+using minutes90v8.Entities;
+using minutes90v8.Entities.Roles;
 
-namespace minutes90.Extensions
+namespace minutes90v8.Extensions
 {
     public class IdentityDataSeederExtension
     {

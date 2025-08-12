@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using minutes90.Dto;
-using minutes90.Entities;
-using minutes90.Interfaces;
+using minutes90v8.Dto;
+using minutes90v8.Entities;
+using minutes90v8.Interfaces;
 
-namespace minutes90.Services
+namespace minutes90v8.Services
 {
     public class AccountServices(
     UserManager<AppUsers> userManager,

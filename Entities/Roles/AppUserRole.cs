@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace minutes90.Entities.Roles
+namespace minutes90v8.Entities.Roles
 {
     public class AppUserRole : IdentityUserRole<int>
     {

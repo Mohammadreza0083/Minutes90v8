@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using minutes90.Dto;
+using minutes90v8.Dto;
 
-namespace minutes90.Interfaces
+namespace minutes90v8.Interfaces
 {
     public interface IAccountServices
     {

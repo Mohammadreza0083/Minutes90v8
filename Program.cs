@@ -1,9 +1,9 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using minutes90.Entities;
-using minutes90.Entities.Roles;
-using minutes90.Extensions;
+using minutes90v8.Entities;
+using minutes90v8.Entities.Roles;
+using minutes90v8.Extensions;
 using minutes90v8.Data;
 
 namespace Minutes90v8

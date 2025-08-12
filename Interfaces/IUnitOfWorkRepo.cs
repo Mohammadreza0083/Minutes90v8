@@ -1,4 +1,4 @@
-﻿namespace minutes90.Interfaces
+﻿namespace minutes90v8.Interfaces
 {
     public interface IUnitOfWorkRepo
     {

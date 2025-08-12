@@ -1,6 +1,6 @@
-﻿using minutes90.Entities;
+﻿using minutes90v8.Entities;
 
-namespace minutes90.Interfaces
+namespace minutes90v8.Interfaces
 {
     public interface ITokenServices
     {

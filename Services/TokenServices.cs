@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using minutes90.Entities;
-using minutes90.Interfaces;
+using minutes90v8.Entities;
+using minutes90v8.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace minutes90.Services
+namespace minutes90v8.Services
 {
     public class TokenServices(IConfiguration configuration, UserManager<AppUsers> manager)
         : ITokenServices
@@ -30,11 +30,11 @@ namespace minutes90.Services
 
 
             // Create claims for the token
-            List<Claim> claims =
-            [
-                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new(ClaimTypes.Name, user.UserName)
-            ];
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName)
+            };
 
             // Add role claims
             var roles = await manager.GetRolesAsync(user);

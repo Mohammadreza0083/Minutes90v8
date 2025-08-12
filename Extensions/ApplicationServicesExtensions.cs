@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using minutes90v8.Data;
-using minutes90.Helper;
-using minutes90.Interfaces;
-using minutes90.Repository;
-using minutes90.Services;
+using minutes90v8.Helper;
+using minutes90v8.Interfaces;
+using minutes90v8.Repository;
+using minutes90v8.Services;
 
-namespace minutes90.Extensions
+namespace minutes90v8.Extensions
 {
     public static class ApplicationServicesExtensions
     {

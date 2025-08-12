@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using minutes90v8.Data;
-using minutes90.Entities;
-using minutes90.Entities.Roles;
+using minutes90v8.Entities;
+using minutes90v8.Entities.Roles;
 using System.Text;
 
-namespace minutes90.Extensions
+namespace minutes90v8.Extensions
 {
     public static class IdentityServiceExtension
     {

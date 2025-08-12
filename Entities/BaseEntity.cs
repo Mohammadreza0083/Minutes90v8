@@ -1,4 +1,4 @@
-﻿namespace minutes90.Entities
+﻿namespace minutes90v8.Entities
 {
     public class BaseEntity
     {

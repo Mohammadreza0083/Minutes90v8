@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using minutes90.Dto;
-using minutes90.Entities;
+using minutes90v8.Dto;
+using minutes90v8.Entities;
 
-namespace minutes90.Helper
+namespace minutes90v8.Helper
 {
     public class MappingProfile : Profile
     {

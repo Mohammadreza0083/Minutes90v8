@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace minutes90.Dto
+namespace minutes90v8.Dto
 {
     public class RegisterDto
     {

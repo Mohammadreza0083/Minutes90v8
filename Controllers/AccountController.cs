@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using minutes90.Dto;
-using minutes90.Interfaces;
+using minutes90v8.Dto;
+using minutes90v8.Interfaces;
 
-namespace minutes90.Controllers
+namespace minutes90v8.Controllers
 {
     public class AccountController(
     IAccountServices accountService,

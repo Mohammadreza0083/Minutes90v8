@@ -1,4 +1,4 @@
-﻿namespace minutes90.Extensions
+﻿namespace minutes90v8.Extensions
 {
     public static class SwaggerServicesExtensions
     {
