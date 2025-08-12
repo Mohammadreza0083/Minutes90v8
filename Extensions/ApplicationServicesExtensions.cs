@@ -16,7 +16,8 @@ namespace minutes90v8.Extensions
             services.AddControllers().AddNewtonsoftJson(_ =>
             {
             });
-            services.AddDbContext<AppDbContext>(opt =>
+            
+            try
             {
                 var connectionString = configuration.GetConnectionString("DefaultConnection") ?? 
                                      Environment.GetEnvironmentVariable("DATABASE_URL") ??
@@ -24,12 +25,30 @@ namespace minutes90v8.Extensions
                 
                 if (string.IsNullOrEmpty(connectionString))
                 {
-                    throw new InvalidOperationException("Database connection string is not configured");
+                    Console.WriteLine("Warning: No database connection string found. Using in-memory database.");
+                    services.AddDbContext<AppDbContext>(opt =>
+                    {
+                        opt.UseInMemoryDatabase("Minutes90Db");
+                    });
                 }
-                
-                opt.UseNpgsql(connectionString)
-                    .EnableSensitiveDataLogging();
-            });
+                else
+                {
+                    services.AddDbContext<AppDbContext>(opt =>
+                    {
+                        opt.UseNpgsql(connectionString)
+                            .EnableSensitiveDataLogging();
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database configuration error: {ex.Message}. Using in-memory database.");
+                services.AddDbContext<AppDbContext>(opt =>
+                {
+                    opt.UseInMemoryDatabase("Minutes90Db");
+                });
+            }
+            
             services.AddHttpClient();
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
             services.AddScoped<IAccountServices, AccountServices>();

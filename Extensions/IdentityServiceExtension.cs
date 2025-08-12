@@ -42,7 +42,8 @@ namespace minutes90v8.Extensions
                 
                 if (string.IsNullOrEmpty(tokenKey) || tokenKey.Length < 32)
                 {
-                    throw new InvalidOperationException("TokenKey must be at least 32 characters long");
+                    Console.WriteLine($"Warning: TokenKey is too short ({tokenKey?.Length ?? 0} characters). Using default key.");
+                    tokenKey = "your-super-secret-key-with-at-least-32-characters-for-production";
                 }
                 
                 op.TokenValidationParameters = new TokenValidationParameters

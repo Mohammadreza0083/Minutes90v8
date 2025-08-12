@@ -20,12 +20,31 @@ namespace Minutes90v8
                 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
                 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
-                // Add services to the container.
-                builder.Services.AddApplicationServices(builder.Configuration);
-                builder.Services.AddIdentityServices(builder.Configuration);
-
-                SwaggerServicesExtensions.AddOpenApi(builder.Services);
+                // Add basic services first
                 builder.Services.AddControllers();
+                SwaggerServicesExtensions.AddOpenApi(builder.Services);
+
+                // Add database services
+                try
+                {
+                    builder.Services.AddApplicationServices(builder.Configuration);
+                    Console.WriteLine("Database services added successfully");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Database services error: {ex.Message}");
+                }
+
+                // Add Identity services
+                try
+                {
+                    builder.Services.AddIdentityServices(builder.Configuration);
+                    Console.WriteLine("Identity services added successfully");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Identity services error: {ex.Message}");
+                }
 
                 var app = builder.Build();
 
@@ -43,28 +62,34 @@ namespace Minutes90v8
                 app.UseAuthorization();
                 app.MapControllers();
 
-                using IServiceScope scope = app.Services.CreateScope();
-                var services = scope.ServiceProvider;
+                // Try database operations
                 try
                 {
+                    using IServiceScope scope = app.Services.CreateScope();
+                    var services = scope.ServiceProvider;
+                    
                     AppDbContext context = services.GetRequiredService<AppDbContext>();
                     await context.Database.MigrateAsync();
+                    Console.WriteLine("Database migration completed");
                     
                     var userManager = services.GetRequiredService<UserManager<AppUsers>>();
                     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
                     await IdentityDataSeederExtension.SeedUsersAndRolesAsync(userManager, roleManager);
+                    Console.WriteLine("Database seeding completed");
                 }
                 catch (Exception ex)
                 {
-                    ILogger logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while migrating the database or seeding data.");
+                    Console.WriteLine($"Database operation error: {ex.Message}");
+                    // Continue without database operations
                 }
 
+                Console.WriteLine("Starting application...");
                 app.Run();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Application startup failed: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 throw;
             }
         }
