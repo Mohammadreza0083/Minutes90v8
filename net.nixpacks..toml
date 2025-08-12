@@ -5,4 +5,4 @@ nixPkgs = ["dotnet-sdk_8"]
 cmd = "dotnet publish -c Release -o out"
 
 [phases.start]
-cmd = "./out/minutes90"
+cmd = "./out/minutes90v8"
