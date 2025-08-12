@@ -18,7 +18,16 @@ namespace minutes90v8.Extensions
             });
             services.AddDbContext<AppDbContext>(opt =>
             {
-                opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection") ?? Environment.GetEnvironmentVariable("DefaultConnection"))
+                var connectionString = configuration.GetConnectionString("DefaultConnection") ?? 
+                                     Environment.GetEnvironmentVariable("DATABASE_URL") ??
+                                     Environment.GetEnvironmentVariable("DefaultConnection");
+                
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    throw new InvalidOperationException("Database connection string is not configured");
+                }
+                
+                opt.UseNpgsql(connectionString)
                     .EnableSensitiveDataLogging();
             });
             services.AddHttpClient();

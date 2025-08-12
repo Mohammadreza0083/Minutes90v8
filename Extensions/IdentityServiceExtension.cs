@@ -36,7 +36,15 @@ namespace minutes90v8.Extensions
             })
             .AddJwtBearer(op =>
             {
-                string tokenKey = configuration["TokenKey"] ?? throw new InvalidOperationException("TokenKey is missing");
+                string tokenKey = configuration["TokenKey"] ?? 
+                                 Environment.GetEnvironmentVariable("TokenKey") ?? 
+                                 "your-super-secret-key-with-at-least-32-characters-for-production";
+                
+                if (string.IsNullOrEmpty(tokenKey) || tokenKey.Length < 32)
+                {
+                    throw new InvalidOperationException("TokenKey must be at least 32 characters long");
+                }
+                
                 op.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
