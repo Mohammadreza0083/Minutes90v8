@@ -1,35 +1,33 @@
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using minutes90v8.Entities;
+using minutes90v8.Entities.Roles;
+using minutes90v8.Extensions;
+using minutes90v8.Data;
 
 namespace Minutes90v8
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             try
             {
-                Console.WriteLine("Starting application...");
-                
                 var builder = WebApplication.CreateBuilder(args);
 
                 // Configure for Railway
                 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-                Console.WriteLine($"Using port: {port}");
                 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
-                // Add basic services only
+                // Add services to the container.
+                builder.Services.AddApplicationServices(builder.Configuration);
+                builder.Services.AddIdentityServices(builder.Configuration);
+
+                SwaggerServicesExtensions.AddOpenApi(builder.Services);
                 builder.Services.AddControllers();
-                builder.Services.AddEndpointsApiExplorer();
-                builder.Services.AddSwaggerGen();
 
                 var app = builder.Build();
-
-                Console.WriteLine("Application built successfully");
 
                 // Configure the HTTP request pipeline.
                 if (app.Environment.IsDevelopment())
@@ -45,7 +43,22 @@ namespace Minutes90v8
                 app.UseAuthorization();
                 app.MapControllers();
 
-                Console.WriteLine("Starting web server...");
+                using IServiceScope scope = app.Services.CreateScope();
+                var services = scope.ServiceProvider;
+                try
+                {
+                    AppDbContext context = services.GetRequiredService<AppDbContext>();
+                    await context.Database.MigrateAsync();
+                    var userManager = services.GetRequiredService<UserManager<AppUsers>>();
+                    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+                    await IdentityDataSeederExtension.SeedUsersAndRolesAsync(userManager, roleManager);
+                }
+                catch (Exception ex)
+                {
+                    ILogger logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while migrating the database or seeding data.");
+                }
+
                 app.Run();
             }
             catch (Exception ex)
